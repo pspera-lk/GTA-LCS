@@ -3,20 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Download Page</title>
+  <title>Secure File Download</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #f9f9f9;
+      background: #f4f4f4;
       text-align: center;
-      padding: 50px;
+      padding: 40px;
     }
     .box {
       background: #fff;
       padding: 30px;
-      border-radius: 15px;
+      border-radius: 12px;
       box-shadow: 0 0 15px rgba(0,0,0,0.1);
-      max-width: 400px;
+      max-width: 550px;
       margin: auto;
     }
     button {
@@ -24,42 +24,83 @@
       font-size: 16px;
       border: none;
       border-radius: 8px;
-      background: #4CAF50;
+      background: #2196F3;
       color: white;
       cursor: pointer;
-      transition: background 0.3s ease;
+      margin-top: 15px;
     }
     button:hover {
-      background: #45a049;
+      background: #1976D2;
     }
     .hidden {
       display: none;
     }
     .message {
       margin-top: 20px;
-      font-size: 14px;
+      font-size: 15px;
       color: #333;
+    }
+    ol {
+      text-align: left;
+      padding-left: 20px;
+    }
+    h2 {
+      color: #333;
+    }
+    .warning {
+      color: red;
+      font-size: 20px;
+      font-weight: bold;
+      margin: 15px 0;
+      background: #ffe5e5;
+      padding: 15px;
+      border-radius: 10px;
+      border: 2px solid red;
     }
   </style>
 </head>
 <body>
+
   <div class="box">
     <h2>Download Your File</h2>
-    <p>Click the button below to start the download process.</p>
-    
+    <div class="warning">
+      ⚠️ WARNING: You will be redirected to pages that may contain adult or explicit ads.<br>
+      <span style="font-size: 18px;">Only proceed if you are 18+ and agree to view such content.</span>
+    </div>
+
+    <p>Click the button below to begin your secure download process.</p>
+
+    <!-- ✅ User Guide -->
+    <div class="message" style="text-align: left; margin-top: 20px;">
+      <h3>How to Download:</h3>
+      <ol>
+        <li>Click the <strong>"Get Link"</strong> button.</li>
+        <li>Wait <strong>5 seconds</strong> for the link to be prepared.</li>
+        <li>Click <strong>"Ad Step 1"</strong> — you will be redirected to an ad.</li>
+        <li>Return to this page and click <strong>"Ad Step 2"</strong>.</li>
+        <li>Return again and click <strong>"Download File"</strong> to get your file.</li>
+      </ol>
+    </div>
+
+    <!-- Buttons and messages -->
     <button id="startBtn">Get Link</button>
     <div id="countdown" class="message hidden"></div>
-    <button id="downloadBtn" class="hidden">Get Download Link</button>
+    <button id="step1Btn" class="hidden">Ad Step 1</button>
+    <button id="step2Btn" class="hidden">Ad Step 2</button>
+    <button id="downloadBtn" class="hidden">Download File</button>
     <div id="finalMessage" class="message hidden"></div>
   </div>
 
   <script>
     const startBtn = document.getElementById("startBtn");
     const countdown = document.getElementById("countdown");
+    const step1Btn = document.getElementById("step1Btn");
+    const step2Btn = document.getElementById("step2Btn");
     const downloadBtn = document.getElementById("downloadBtn");
     const finalMessage = document.getElementById("finalMessage");
 
-    let adRedirected = false;
+    let ad1Visited = false;
+    let ad2Visited = false;
 
     startBtn.onclick = function() {
       startBtn.classList.add("hidden");
@@ -73,25 +114,48 @@
         if (timeLeft <= 0) {
           clearInterval(timer);
           countdown.classList.add("hidden");
-          downloadBtn.classList.remove("hidden");
+          step1Btn.classList.remove("hidden");
         }
       }, 1000);
     };
 
-    downloadBtn.onclick = function() {
-      if (!adRedirected) {
-        // Redirect to ad (open in new tab or same window)
-        adRedirected = true;
-        finalMessage.innerText = "After visiting the ad, come back and click again to download.";
-        finalMessage.classList.remove("hidden");
-        // Change this to your real ad URL
-        window.open("https://example.com/your-ad-page", "_blank");
-        downloadBtn.innerText = "Click Again to Download";
-      } else {
-        // Direct file download (replace with your actual file URL)
-        window.location.href = "https://example.com/path-to-your-file.zip";
+    step1Btn.onclick = function() {
+      ad1Visited = true;
+      step1Btn.classList.add("hidden");
+      step2Btn.classList.remove("hidden");
+      finalMessage.innerText = "You visited Ad Step 1. Now return and click Ad Step 2.";
+      finalMessage.classList.remove("hidden");
+
+      // Replace with your first ad URL
+      window.open("https://embraceattaindatabase.com/k8cvgjyx4a?key=0d378815812231c8cd92ff0dc843241d", "_blank");
+    };
+
+    step2Btn.onclick = function() {
+      if (!ad1Visited) {
+        alert("You must visit Ad Step 1 first!");
+        return;
       }
+      ad2Visited = true;
+      step2Btn.classList.add("hidden");
+      downloadBtn.classList.remove("hidden");
+      finalMessage.innerText = "Almost there! After visiting Ad Step 2, return and click Download File.";
+      
+      // Replace with your second ad URL
+      window.open("https://embraceattaindatabase.com/b0nb79n5p?key=a4f4db7d8142c2c0fa9cda6f44be0929", "_blank");
+    };
+
+    downloadBtn.onclick = function() {
+      if (!ad1Visited || !ad2Visited) {
+        alert("You must visit both Ad Step 1 and Step 2 first!");
+        return;
+      }
+
+      finalMessage.innerText = "Preparing your download...";
+      
+      // Replace with your actual file download URL
+      window.location.href = "https://example.com/your-file.zip";
     };
   </script>
+
 </body>
 </html>
