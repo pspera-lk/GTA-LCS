@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Download Page</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f9f9f9;
+      text-align: center;
+      padding: 50px;
+    }
+    .box {
+      background: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      max-width: 400px;
+      margin: auto;
+    }
+    button {
+      padding: 12px 25px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      background: #4CAF50;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background: #45a049;
+    }
+    .hidden {
+      display: none;
+    }
+    .message {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>Download Your File</h2>
+    <p>Click the button below to start the download process.</p>
+    
+    <button id="startBtn">Get Link</button>
+    <div id="countdown" class="message hidden"></div>
+    <button id="downloadBtn" class="hidden">Get Download Link</button>
+    <div id="finalMessage" class="message hidden"></div>
+  </div>
+
+  <script>
+    const startBtn = document.getElementById("startBtn");
+    const countdown = document.getElementById("countdown");
+    const downloadBtn = document.getElementById("downloadBtn");
+    const finalMessage = document.getElementById("finalMessage");
+
+    let adRedirected = false;
+
+    startBtn.onclick = function() {
+      startBtn.classList.add("hidden");
+      countdown.classList.remove("hidden");
+      let timeLeft = 5;
+      countdown.innerText = `Please wait ${timeLeft} seconds...`;
+
+      const timer = setInterval(() => {
+        timeLeft--;
+        countdown.innerText = `Please wait ${timeLeft} seconds...`;
+        if (timeLeft <= 0) {
+          clearInterval(timer);
+          countdown.classList.add("hidden");
+          downloadBtn.classList.remove("hidden");
+        }
+      }, 1000);
+    };
+
+    downloadBtn.onclick = function() {
+      if (!adRedirected) {
+        // Redirect to ad (open in new tab or same window)
+        adRedirected = true;
+        finalMessage.innerText = "After visiting the ad, come back and click again to download.";
+        finalMessage.classList.remove("hidden");
+        // Change this to your real ad URL
+        window.open("https://example.com/your-ad-page", "_blank");
+        downloadBtn.innerText = "Click Again to Download";
+      } else {
+        // Direct file download (replace with your actual file URL)
+        window.location.href = "https://example.com/path-to-your-file.zip";
+      }
+    };
+  </script>
+</body>
+</html>
